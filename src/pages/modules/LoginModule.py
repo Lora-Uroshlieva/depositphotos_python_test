@@ -1,33 +1,31 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from src.pages.modules.BaseModule import BaseModule
+from src.helpers.element_helper import S
 
 
-class LoginModule:
+class LoginModule(BaseModule):
     _username_input_selector = "form.login-box input[name='username']"
     _password_input_selector = "form.login-box input[name='password']"
     _confirm_button_selector = "form.login-box button[type='submit']"
-
-    def __init__(self, driver, parent_element):
-        self.driver = driver
-        self.parent_element = parent_element
+    _incorrect_data_warn_selector = 'span[class="field-box__error"]'
 
     def get_username_input(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, self._username_input_selector)))
+        element = S(self.driver, self._username_input_selector)
         return element
 
     def get_password_input(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, self._password_input_selector)))
+        element = S(self.driver, self._password_input_selector)
         return element
 
     def get_confirm_button(self):
-        element = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, self._confirm_button_selector)))
+        element = S(self.driver, self._confirm_button_selector)
         return element
 
-    def log_in(self):
-        self.get_username_input().send_keys('VinsOrder')
-        self.get_password_input().send_keys('123456')
+    def log_in(self, username, password):
+        self.get_username_input().send_keys(username)
+        self.get_password_input().send_keys(password)
         self.get_confirm_button().click()
+
+    def get_warn_incorrect_data(self):
+        element = S(self.driver, self._incorrect_data_warn_selector)
+        return element
+
