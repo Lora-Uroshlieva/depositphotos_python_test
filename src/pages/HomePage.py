@@ -15,11 +15,11 @@ class HomePage(BasePage):
     _search_module_selector = "div.search-bar"
     _sign_in_button_selector = "a.not-auth-box__btn[href*='login']"
 
-    def __init__(self, driver):
-        BasePage.__init__(self, driver)
-        self.login_module = LoginModule(self.driver, self._login_module_selector)
-        self.auth_module = AuthModule(self.driver, self._auth_module_selector)
-        self.search_module = SearchModule(self.driver, self._search_module_selector)
+    def __init__(self):
+        BasePage.__init__(self)
+        self.login_module = LoginModule(self._login_module_selector)
+        self.auth_module = AuthModule(self._auth_module_selector)
+        # self.search_module = SearchModule(self.driver, self._search_module_selector)
 
     def open_page(self, relative_url='/'):
         self.driver.get(self.base_url + relative_url)

@@ -3,21 +3,22 @@ from src.helpers.element_helper import S
 
 
 class LoginModule(BaseModule):
-    _username_input_selector = "form.login-box input[name='username']"
-    _password_input_selector = "form.login-box input[name='password']"
-    _confirm_button_selector = "form.login-box button[type='submit']"
+
+    _username_input_selector = "input[name='username']"
+    _password_input_selector = "input[name='password']"
+    _confirm_button_selector = "button[type='submit']"
     _incorrect_data_warn_selector = 'span[class="field-box__error"]'
 
     def get_username_input(self):
-        element = S(self.driver, self._username_input_selector)
+        element = self.get_wrapper().S(self._username_input_selector)
         return element
 
     def get_password_input(self):
-        element = S(self.driver, self._password_input_selector)
+        element = self.get_wrapper().S(self._password_input_selector)
         return element
 
     def get_confirm_button(self):
-        element = S(self.driver, self._confirm_button_selector)
+        element = self.get_wrapper().S(self._confirm_button_selector)
         return element
 
     def log_in(self, username, password):
@@ -26,6 +27,6 @@ class LoginModule(BaseModule):
         self.get_confirm_button().click()
 
     def get_warn_incorrect_data(self):
-        element = S(self.driver, self._incorrect_data_warn_selector)
+        element = S(self._incorrect_data_warn_selector)
         return element
 
